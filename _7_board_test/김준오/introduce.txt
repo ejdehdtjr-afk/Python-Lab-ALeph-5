@@ -12,3 +12,5 @@ Java, JavaScript, React, Spring, MyBatis, MySQL, Docker, Git/GitHub, Wazuh, Gray
 
 조원들에게 전하고 싶은 한마디
 서로 편하게 의견을 나누고, 막히는 부분은 같이 해결하면서 끝까지 좋은 결과물을 만들어가면 좋겠습니다. 잘 부탁드립니다!
+
+작업경로 : C:\Users\user\Desktop\새 폴더\Python-Lab-ALeph-T\_7_board_test\logs\suricata_alert.log
