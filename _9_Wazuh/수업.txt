@@ -1,0 +1,40 @@
+Python-Lab-Aleph\_10_wazuh 경로 터미널
+docker exec wazuh-manager /var/ossec/bin/agent_control -l
+
+docker exec wazuh-manager /var/ossec/bin/wazuh-control status
+
+docker exec wazuh-manager grep -A7 "output.elasticsearch" /etc/filebeat/filebeat.yml
+
+docker exec wazuh-manager filebeat test output -c /etc/filebeat/filebeat.yml
+
+docker exec wazuh-indexer curl -k -u admin:SecretPassword https://localhost:9200
+
+docker exec wazuh-manager ps aux | Select-String "filebeat"
+
+docker cp ".\wazuh-config\local_decoder.xml" wazuh-manager:/var/ossec/etc/decoders/local_decoder.xml
+docker cp ".\wazuh-config\local_rules.xml" wazuh-manager:/var/ossec/etc/rules/local_rules.xml
+docker cp ".\wazuh-config\ossec.conf" wazuh-manager:/var/ossec/etc/ossec.conf
+
+docker exec wazuh-manager /var/ossec/bin/agent_groups -a -g flask-board -q
+docker exec wazuh-manager /var/ossec/bin/agent_groups -l
+docker exec wazuh-manager bash -c "mkdir -p /var/ossec/var/multigroups && chown wazuh:wazuh /var/ossec/var/multigroups && chmod 770 /var/ossec/var/multigroups"
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+새 터미널
+docker cp ".\agent.conf.tmp" wazuh-manager:/var/ossec/etc/shared/flask-board/agent.conf.tmp
+docker exec wazuh-manager bash -c "chown wazuh:wazuh /var/ossec/etc/shared/flask-board/agent.conf.tmp && chmod 660 /var/ossec/etc/shared/flask-board/agent.conf.tmp"
+docker exec wazuh-manager /var/ossec/bin/verify-agent-conf -f /var/ossec/etc/shared/flask-board/agent.conf.tmp
+docker exec wazuh-manager bash -c "mv /var/ossec/etc/shared/flask-board/agent.conf.tmp /var/ossec/etc/shared/flask-board/agent.conf"
+docker exec wazuh-manager bash -c "chown wazuh:wazuh /var/ossec/etc/shared/flask-board/agent.conf && chmod 660 /var/ossec/etc/shared/flask-board/agent.conf && ls -l /var/ossec/etc/shared/flask-board/agent.conf"
+docker exec wazuh-manager cat /var/ossec/etc/shared/flask-board/agent.conf
+docker exec wazuh-manager /var/ossec/bin/agent_groups -a -i 001 -g flask-board -q
+docker exec wazuh-manager /var/ossec/bin/agent_groups -S -i 001
+
+Python-Lab-Aleph\_10_wazuh 경로 터미널
+docker exec wazuh-manager /var/ossec/bin/wazuh-control restart
+
+웹 접속
+https://localhost/
+
+
